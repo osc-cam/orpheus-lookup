@@ -1,0 +1,14 @@
+footer {
+  font-size: 10px;
+  padding-top: 20px;
+}
+
+.data {
+  color: #363;
+  padding-left: 6px;
+}
+
+#content td {
+	font-size: 12px;
+	padding-top: 2px;
+}
