@@ -13,7 +13,7 @@ $(function() {
   
 });
 
-function requestOrpheusInfo(client, journal_name) {
+/*function requestOrpheusInfo(client, journal_name) {
   fetch('https://orpheus-prod.lib.cam.ac.uk/policies/api/cambridge/?name=' + journal_name)
     .then(
       function(response) {
@@ -33,6 +33,28 @@ function requestOrpheusInfo(client, journal_name) {
     console.log('Fetch Error :-S', err);
   });
 }
+*/
+
+function requestOrpheusInfo(client, journal_name) {
+  var settings = {
+    url: 'https://orpheus-prod.lib.cam.ac.uk/policies/api/cambridge/?name=' + journal_name,
+    cors: true,
+    type:'GET',
+    dataType: 'json'    
+  };
+
+  client.request(settings).then(
+    function(data) {
+//      showInfo(data);
+      console.log(data);
+    },
+    function(response) {
+//      showError(response);
+      console.log(response);
+    }
+  );
+}
+
 
 function requestUserInfo(client, id) {
   var settings = {
