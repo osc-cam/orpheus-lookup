@@ -8,5 +8,6 @@ var gOptions = {
     green_licence_field_id: '360008808154',
     embargo_duration_field_id: '360008807274',
     gold_licence_options_field_id: '360008808494',
-    green_allowed_version_field_id: '360008807234'
+    green_allowed_version_field_id: '360008807234',
+    publisher_name_id: '38767048'
 };

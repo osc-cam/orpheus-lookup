@@ -123,10 +123,14 @@ function requestOrpheusInfo(client, journalName, issn, eissn) {
             resize(client);
         },
         function (response) {
-            showOrpheusError("Error while querying Orpheus API. Please consult with your administrator");
+            showOrpheusError("Error while querying Orpheus API. Try reloading the app, and if the error persists " +
+                "contact the administrator.");
             resize(client);
         }
-    );
+    ).catch(function(error) {
+        showOrpheusError(error);
+        resize(client);
+    });
 }
 
 function resize(client) {
@@ -142,12 +146,14 @@ function setTicketFieldsFromOrpheusData(client, data) {
     var zd_green_allowed_version = 'ticket.customField:custom_field_' + gOptions.green_allowed_version_field_id;
     var zd_gold_licence_options = 'ticket.customField:custom_field_' + gOptions.gold_licence_options_field_id;
     var zd_green_licence = 'ticket.customField:custom_field_' + gOptions.green_licence_field_id;
+    var zd_publisher = 'ticket.customField:custom_field_' + gOptions.publisher_name_id;
 
     var zd_apc_range_value= (data.results[0].zd_apc_range != null) ?  data.results[0].zd_apc_range : "";
     var zd_embargo_duration_value=(data.results[0].zd_embargo_duration != null) ?  data.results[0].zd_embargo_duration : "";
     var zd_green_allowed_version_value = (data.results[0].zd_green_allowed_version != null) ?  data.results[0].zd_green_allowed_version : "";
     var zd_gold_licence_options_value = (data.results[0].zd_gold_licence_options != null) ?  data.results[0].zd_gold_licence_options : "";
     var zd_green_licence_value = (data.results[0].zd_green_licence != null) ?  data.results[0].zd_green_licence : "";
+    var zd_publisher_value = (data.results[0].zd_publisher != null) ?  data.results[0].zd_publisher : "";
 
     var ticket_fields = {};
     ticket_fields[zd_apc_range] = zd_apc_range_value;
@@ -155,7 +161,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
     ticket_fields[zd_green_allowed_version] = zd_green_allowed_version_value;
     ticket_fields[zd_gold_licence_options] = zd_gold_licence_options_value;
     ticket_fields[zd_green_licence] = zd_green_licence_value;
-
+    ticket_fields[zd_publisher] = zd_publisher_value;
 
     client.set(ticket_fields).then(
         function(data) {
