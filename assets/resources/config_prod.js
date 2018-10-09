@@ -6,6 +6,7 @@ var gOptions = {
     apc_range_field_id: '360008258194',
     green_licence_field_id: '24117506',
     embargo_duration_field_id: '24072173',
-    gold_licence_options_field_id: '360009704814',
-    green_allowed_version_field_id: '24072163'
+    gold_licence_options_field_id: '360009619733',
+    green_allowed_version_field_id: '24072163',
+    publisher_name_id: '24069543'
 };
