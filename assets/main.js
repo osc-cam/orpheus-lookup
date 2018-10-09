@@ -142,7 +142,7 @@ function resize(client) {
 }
 function setTicketFieldsFromOrpheusData(client, data) {
     var zd_apc_range= 'ticket.customField:custom_field_' + gOptions.apc_range_field_id;
-    var zd_embargo_durationd = 'ticket.customField:custom_field_' + gOptions.embargo_duration_field_id;
+    var zd_embargo_duration = 'ticket.customField:custom_field_' + gOptions.embargo_duration_field_id;
     var zd_green_allowed_version = 'ticket.customField:custom_field_' + gOptions.green_allowed_version_field_id;
     var zd_gold_licence_options = 'ticket.customField:custom_field_' + gOptions.gold_licence_options_field_id;
     var zd_green_licence = 'ticket.customField:custom_field_' + gOptions.green_licence_field_id;
@@ -157,7 +157,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
 
     var ticket_fields = {};
     ticket_fields[zd_apc_range] = zd_apc_range_value;
-    ticket_fields[zd_embargo_durationd] = zd_embargo_duration_value;
+    ticket_fields[zd_embargo_duration] = zd_embargo_duration_value;
     ticket_fields[zd_green_allowed_version] = zd_green_allowed_version_value;
     ticket_fields[zd_gold_licence_options] = zd_gold_licence_options_value;
     ticket_fields[zd_green_licence] = zd_green_licence_value;
