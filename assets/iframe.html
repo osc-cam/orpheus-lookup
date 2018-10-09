@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" >
     <link href="main.css" rel="stylesheet">
 </head>
 <body>
@@ -14,16 +14,20 @@
 <!-- Scripts -->
 <script id="orpheus-template" type="text/x-handlebars-template">
     <br>
-    <table class="table table-sm ">
+    <table class="table table-sm">
         <tbody>
+            {{#if publisher_name}}
             <tr>
                 <td><b>Publisher name</b></td>
                 <td>{{publisher_name}}</td>
             </tr>
+            {{/if}}
+            {{#if journal_apc_ange}}
             <tr>
                 <td><b>APC range</b></td>
                 <td>{{journal_apc_ange}}</td>
             </tr>
+            {{/if}}
             {{#if embargo_duration}}
             <tr>
                 <td><b>Embargo duration</b></td>
