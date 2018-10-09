@@ -27,7 +27,7 @@ $(function () {
 });
 
 /**
- Retrieve ticket information by ID
+ Retrieve ticket information by ID - not needed for now
  **/
 function requestTicketInfo(client, id) {
     var settings = {
@@ -86,7 +86,7 @@ function requestOrpheusInfo(client, journalName, issn, eissn) {
     /*
         Parameter for journal name ?name=
         Parameter for issn/eissn ?issn=
-        API endpoint: https://orpheus-dev.lib.cam.ac.uk/policies/api/cambridge/
+        API endpoint: https://orpheus-[dev|prod].lib.cam.ac.uk/policies/api/cambridge/
     */
     var orpheusUrl = "";
 
@@ -102,7 +102,7 @@ function requestOrpheusInfo(client, journalName, issn, eissn) {
             "Please fill in one of the following: issn/eissn or Journal name");
     }
 
-    // CORS: true is only needed when testing with localhost, before installing the APP in Zendesk
+    // CORS needed for cross-domain issues with redirects
     var settingsOrpheus = {
         url: orpheusUrl,
         cors: true,
@@ -152,7 +152,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
     var zd_embargo_duration_value=(data.results[0].zd_embargo_duration != null) ?  data.results[0].zd_embargo_duration : "";
     var zd_green_allowed_version_value = (data.results[0].zd_green_allowed_version != null) ?  data.results[0].zd_green_allowed_version : "";
     var zd_gold_licence_options_value = (data.results[0].zd_gold_licence_options != null) ?  data.results[0].zd_gold_licence_options : "";
-    var zd_green_licence_value = (data.results[0].zd_green_licence != null) ?  data.results[0].zd_green_licence : "";
+    var zd_green_licence_value = (data.results[0].zd_green_licence != null) ?  data.results[0].zd_green_licence : [];
     var zd_publisher_value = (data.results[0].zd_publisher != null) ?  data.results[0].zd_publisher : "";
 
     var ticket_fields = {};
@@ -165,9 +165,9 @@ function setTicketFieldsFromOrpheusData(client, data) {
 
     client.set(ticket_fields).then(
         function(data) {
-            console.log(data); // { 'ticket.subject': 'Printer Overheating Incident', 'ticket.type': 'incident' }
+            console.log(data);
         }).catch(function(error) {
-        console.log(error.toString()); // Error: "ticket.form.id" Invalid Ticket Form ID
+        console.log(error.toString());
     });
 }
 
@@ -175,13 +175,13 @@ function setTicketFieldsFromOrpheusData(client, data) {
 function showOrpheusInfo(data) {
 
     // Are there any results?
-    if (data == null || data.count == 0) {
+    if (data == null || data.count === 0) {
         showOrpheusError("No results from Orpheus for the given search parameters." +
             "Please review information in Database.");
     }
     var orpheus_data = {
         'publisher_name': data.results[0].zd_publisher,
-        'journal_apc_ange': data.results[0].zd_apc_range,
+        'journal_apc_range': data.results[0].zd_apc_range,
         'embargo_duration': data.results[0].zd_embargo_duration,
         'green_allowed_version': data.results[0].zd_green_allowed_version,
         'gold_licence_options': data.results[0].zd_gold_licence_options
