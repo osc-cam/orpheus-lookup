@@ -1,51 +1,68 @@
 <html>
 <head>
-  <meta charset="utf-8">
-  <!-- http://garden.zendesk.com -->
-<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zendeskgarden/css-bedrock@7.0" type="text/css">-->
-  <link href="https://cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="main.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="main.css" rel="stylesheet">
 </head>
 <body>
-
-  <div id="content"></div>
-  
-  <footer>
-    <a href="https://mysite.github.io/support" target="_blank">Report bugs</a>
-  </footer>
-  
-  <script id="requester-template" type="text/x-handlebars-template">
-    <table>
-    <tr>
-      <td>Customer:</td>
-      <td class="data">{{name}}</td>
-    </tr>
-    {{#if tags}}
-    <tr>
-      <td>Tags:</td>
-      <td class="data">{{#each tags}}{{this}} {{/each}}</td>
-    </tr>
-    {{/if}}
-    <tr>
-      <td>Added:</td>
-      <td class="data">{{created_at}}</td>
-    </tr>
-    <tr>
-      <td>Last signed in:</td>
-      <td class="data">{{last_login_at}}</td>
-    </tr>
+<div id="content"></div>
+<br>
+<button id="save_button" class="btn btn-primary btn-sm" style="display: none;">Populate ticket fields</button>
+<footer>
+    <a href="mailto:support@repository.cam.ac.uk" target="_blank">Report bugs</a>
+</footer>
+<!-- Scripts -->
+<script id="orpheus-template" type="text/x-handlebars-template">
+    <br>
+    <table class="table table-sm ">
+        <tbody>
+            <tr>
+                <td><b>Publisher name</b></td>
+                <td>{{publisher_name}}</td>
+            </tr>
+            <tr>
+                <td><b>APC range</b></td>
+                <td>{{journal_apc_ange}}</td>
+            </tr>
+            {{#if embargo_duration}}
+            <tr>
+                <td><b>Embargo duration</b></td>
+                <td>{{embargo_duration}}</td>
+            </tr>
+            {{/if}}
+            {{#if gold_licence_options}}
+            <tr>
+                <td><b>Gold licence options</b></td>
+                <td>{{gold_licence_options}}</td>
+            </tr>
+            {{/if}}
+            {{#if green_allowed_version}}
+            <tr>
+                <td><b>Green allowed version</b></td>
+                <td>{{green_allowed_version}}</td>
+            </tr>
+            {{/if}}
+            {{#if green_licence}}
+            <tr>
+                <th><b>Green licence</b></th>
+                <td>{{green_licence}}</td>
+            </tr>
+            {{/if}}
+        </tbody>
     </table>
-  </script>
-  
-  <script id="error-template" type="text/x-handlebars-template">
+</script>
+<script id="error-template" type="text/x-handlebars-template">
     <p>{{status}} - {{statusText}} error. Please report a bug at the link below.</p>
-  </script>
-  
-  <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
-  <script src="https://cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
-<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>-->
-  <script type="text/javascript" src="main.js"></script>
+</script>
+<script id="orpheus-error-template" type="text/x-handlebars-template">
+    <p>{{sms}}</p>
+</script>
+<script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
+<!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
+<script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+<!-- Templating Handlebars -->
+<script src="https://cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
+<script src="resources/config_dev.js"></script>
+<script type="text/javascript" src="main.js"></script>
 </body>
-
 </html>

@@ -1,8 +1,8 @@
 {
   "app": {
-    "name": "Zen Tunes",
-    "short_description": "Play the famous zen tunes in your help desk.",
-    "long_description": "Play the famous zen tunes in your help desk and \n listen to the beats it has to offer.",
+    "name": "Orpheus lookup",
+    "short_description": "Searches Orpheus and populates tickets with journal information.",
+    "long_description": "Searches Orpheus (https://orpheus-prod.lib.cam.ac.uk) and populates tickets with journal information: including APC range, embargoes, licences and self-archiving versions.",
     "installation_instructions": "Simply click install."
   }
 }
