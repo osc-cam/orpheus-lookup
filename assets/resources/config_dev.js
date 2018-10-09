@@ -1,4 +1,3 @@
-var orpheusData = {};
 var gOptions = {
     orpheus_api_url: "https://orpheus-dev.lib.cam.ac.uk/policies/api/cambridge/",
     issn_field_id: '360009657254',
