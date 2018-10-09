@@ -183,7 +183,7 @@ function showOrpheusInfo(data) {
         'publisher_name': data.results[0].zd_publisher,
         'journal_apc_ange': data.results[0].zd_apc_range,
         'embargo_duration': data.results[0].zd_embargo_duration,
-        'green_allowed_verion': data.results[0].zd_green_allowed_version,
+        'green_allowed_version': data.results[0].zd_green_allowed_version,
         'gold_licence_options': data.results[0].zd_gold_licence_options
     };
 
