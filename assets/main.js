@@ -182,9 +182,10 @@ function showOrpheusInfo(data) {
     var orpheus_data = {
         'publisher_name': data.results[0].zd_publisher,
         'journal_apc_range': data.results[0].zd_apc_range,
-        'embargo_duration': data.results[0].zd_embargo_duration,
-        'green_allowed_version': data.results[0].zd_green_allowed_version,
-        'gold_licence_options': data.results[0].zd_gold_licence_options
+        'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
+        'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
+        'gold_licence_options': data.results[0].zd_gold_licence_options.forEach(function(option)
+                                                                                { friendlyLicence(option);})
     };
 
     var source = $("#orpheus-template").html();
@@ -217,6 +218,52 @@ function showOrpheusError(sms) {
 }
 
 /* Auxiliary, formatting functions */
+function friendlyEmbargo(tag) {
+    var embargo_duration_dict = {
+        '0_months': '0 months',
+        '2_months': '2 months',
+        '3_months': '3 months',
+        '6_months': '6 months',
+        '12_months': '12 months',
+        '18_months': '18 months',
+        '24_months': '24 months',
+        '36_months': '36 months',
+        '48_months': '48 months',
+        '5_years': '5 years',
+        '9_months': '9 months'
+        };
+
+        return embargo_duration_dict[tag];
+}
+
+function friendlyLicence(tag) {
+    var gold_licence_dict = {
+        'gold_cc_by': 'CC BY',
+        'gold_cc_by_nd': 'CC BY-ND',
+        'gold_cc_by_sa': 'CC BY-SA',
+        'gold_cc_by_nc': 'CC BY-NC',
+        'gold_cc_by_nc_nd': 'CC BY-NC-ND',
+        'gold_cc_by_nc_sa': 'CC BY-NC-SA',
+        'gold_cc0': 'CC0',
+        'gold_custom': 'Custom',
+        'gold_unclear': 'Unclear'
+        };
+
+        return gold_licence_dict[tag];
+}
+
+function friendlyVersion(tag) {
+    var green_version_dict = {
+        'aam': 'AAM',
+        'no_version_allowed': 'No version allowed',
+        'oa_journal_conference': 'Open Access journal/conference',
+        'pre_print': 'Pre-print',
+        'version_of_record': 'Version of record'
+    };
+
+    return green_version_dict[tag];
+}
+
 function formatDate(date) {
     var cdate = new Date(date);
     var options = {
