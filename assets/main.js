@@ -151,8 +151,8 @@ function setTicketFieldsFromOrpheusData(client, data) {
     var zd_apc_range_value= (data.results[0].zd_apc_range != null) ?  data.results[0].zd_apc_range : "";
     var zd_embargo_duration_value=(data.results[0].zd_embargo_duration != null) ?  data.results[0].zd_embargo_duration : "";
     var zd_green_allowed_version_value = (data.results[0].zd_green_allowed_version != null) ?  data.results[0].zd_green_allowed_version : "";
-    var zd_gold_licence_options_value = (data.results[0].zd_gold_licence_options != null) ?  data.results[0].zd_gold_licence_options : "";
-    var zd_green_licence_value = (data.results[0].zd_green_licence != null) ?  data.results[0].zd_green_licence : [];
+    var zd_gold_licence_options_value = (data.results[0].zd_gold_licence_options != null) ?  data.results[0].zd_gold_licence_options : [];
+    var zd_green_licence_value = (data.results[0].zd_green_licence != null) ?  data.results[0].zd_green_licence : "";
     var zd_publisher_value = (data.results[0].zd_publisher != null) ?  data.results[0].zd_publisher : "";
 
     var ticket_fields = {};
@@ -185,7 +185,8 @@ function showOrpheusInfo(data) {
         'journal_apc_range': data.results[0].zd_apc_range,
         'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
         'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
-        'gold_licence_options': data.results[0].zd_gold_licence_options.forEach(option => friendlyLicence(option))
+        'gold_licence_options': data.results[0].zd_gold_licence_options
+//        'gold_licence_options': (data.results[0].zd_gold_licence_options != null) ? data.results[0].zd_gold_licence_options.forEach(option => friendlyLicence(option)) : data.results[0].zd_gold_licence_options
     };
 
     var source = $("#orpheus-template").html();

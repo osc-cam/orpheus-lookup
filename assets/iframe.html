@@ -13,7 +13,6 @@
 </footer>
 <!-- Scripts -->
 <script id="orpheus-template" type="text/x-handlebars-template">
-    <br>
     <table class="table table-sm">
         <tbody>
             {{#if publisher_name}}
@@ -52,14 +51,11 @@
                 <td>{{green_licence}}</td>
             </tr>
             {{/if}}
-            {{#if orpheus_id}}
-            <tr>
-                <th><a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"
-                       target="_blank">Go to Orpheus record</a></th>
-            </tr>
-            {{/if}}
         </tbody>
     </table>
+    {{#if orpheus_id}}
+        <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank" style="font-size: 14px">Go to Orpheus record</a>
+    {{/if}}
 </script>
 <script id="error-template" type="text/x-handlebars-template">
     <p>{{status}} - {{statusText}} error. Please report a bug at the link below.</p>
@@ -72,7 +68,7 @@
 <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
 <!-- Templating Handlebars -->
 <script src="https://cdn.jsdelivr.net/handlebarsjs/4.0.8/handlebars.min.js"></script>
-<script src="resources/config_prod.js"></script>
+<script src="resources/config_dev.js"></script>
 <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
