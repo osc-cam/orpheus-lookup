@@ -180,12 +180,12 @@ function showOrpheusInfo(data) {
             "Please review information in Database.");
     }
     var orpheus_data = {
+        'orpheus_id': data.results[0].id,
         'publisher_name': data.results[0].zd_publisher,
         'journal_apc_range': data.results[0].zd_apc_range,
         'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
         'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
-        'gold_licence_options': data.results[0].zd_gold_licence_options.forEach(function(option)
-                                                                                { friendlyLicence(option);})
+        'gold_licence_options': data.results[0].zd_gold_licence_options.forEach(option => friendlyLicence(option))
     };
 
     var source = $("#orpheus-template").html();
