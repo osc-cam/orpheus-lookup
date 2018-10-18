@@ -185,6 +185,7 @@ function showOrpheusInfo(data) {
         'journal_apc_range': data.results[0].zd_apc_range,
         'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
         'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
+        'green_licence': data.results[0].zd_green_licence,
         'gold_licence_options': data.results[0].zd_gold_licence_options
 //        'gold_licence_options': (data.results[0].zd_gold_licence_options != null) ? data.results[0].zd_gold_licence_options.forEach(option => friendlyLicence(option)) : data.results[0].zd_gold_licence_options
     };
