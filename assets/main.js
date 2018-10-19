@@ -179,15 +179,15 @@ function showOrpheusInfo(data) {
         showOrpheusError("No results from Orpheus for the given search parameters." +
             "Please review information in Database.");
     }
+    console.log(data)
     var orpheus_data = {
         'orpheus_id': data.results[0].id,
         'publisher_name': data.results[0].zd_publisher,
         'journal_apc_range': data.results[0].zd_apc_range,
         'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
         'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
-        'green_licence': data.results[0].zd_green_licence,
-        'gold_licence_options': data.results[0].zd_gold_licence_options
-//        'gold_licence_options': (data.results[0].zd_gold_licence_options != null) ? data.results[0].zd_gold_licence_options.forEach(option => friendlyLicence(option)) : data.results[0].zd_gold_licence_options
+        'green_licence': friendlyLicence(data.results[0].zd_green_licence),
+        'gold_licence_options': data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x))
     };
 
     var source = $("#orpheus-template").html();
@@ -239,7 +239,15 @@ function friendlyEmbargo(tag) {
 }
 
 function friendlyLicence(tag) {
-    var gold_licence_dict = {
+    var licence_dict = {
+        'cc-by': 'CC BY',
+        'cc_by_nc': 'CC BY-NC',
+        'cc_by_nc_nd': 'CC BY-NC-ND',
+        'cc_by_nc_sa': 'CC BY-NC-SA',
+        'cc_by_nd': 'CC BY-ND',
+        'cc_by_sa': 'CC BY-SA',
+        'custom_licence': 'Custom',
+        'unclear_licence': 'Unclear',
         'gold_cc_by': 'CC BY',
         'gold_cc_by_nd': 'CC BY-ND',
         'gold_cc_by_sa': 'CC BY-SA',
@@ -251,7 +259,7 @@ function friendlyLicence(tag) {
         'gold_unclear': 'Unclear'
         };
 
-        return gold_licence_dict[tag];
+        return licence_dict[tag];
 }
 
 function friendlyVersion(tag) {
