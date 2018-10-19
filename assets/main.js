@@ -187,7 +187,8 @@ function showOrpheusInfo(data) {
         'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
         'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
         'green_licence': friendlyLicence(data.results[0].zd_green_licence),
-        'gold_licence_options': data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x))
+        'gold_licence_options': data.results[0].zd_gold_licence_options != null ?
+            data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x)) : ""
     };
 
     var source = $("#orpheus-template").html();
