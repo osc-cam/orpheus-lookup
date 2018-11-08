@@ -95,7 +95,7 @@ function requestOrpheusInfo(client, journalName, issn, eissn) {
     } else if (eissn != null && eissn !== "") {
         orpheusUrl = gOptions.orpheus_api_url + "?issn=" + eissn;
     } else if (journalName != null && journalName !== "") {
-        orpheusUrl = gOptions.orpheus_api_url + "?name=" + journalName;
+        orpheusUrl = gOptions.orpheus_api_url + "?name=" + encodeURIComponent(journalName);
     } else {
         // No information available to query Orpheus
         showOrpheusError("The ticket does not contain any information to query Orpheus. " +
