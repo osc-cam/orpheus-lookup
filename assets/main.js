@@ -146,6 +146,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
     var zd_green_allowed_version = 'ticket.customField:custom_field_' + gOptions.green_allowed_version_field_id;
     var zd_gold_licence_options = 'ticket.customField:custom_field_' + gOptions.gold_licence_options_field_id;
     var zd_green_licence = 'ticket.customField:custom_field_' + gOptions.green_licence_field_id;
+    var zd_journal_oa_status = 'ticket.customField:custom_field_' + gOptions.journal_oa_status_field_id;
     var zd_publisher = 'ticket.customField:custom_field_' + gOptions.publisher_name_id;
 
     var zd_apc_range_value= (data.results[0].zd_apc_range != null) ?  data.results[0].zd_apc_range : "";
@@ -153,6 +154,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
     var zd_green_allowed_version_value = (data.results[0].zd_green_allowed_version != null) ?  data.results[0].zd_green_allowed_version : "";
     var zd_gold_licence_options_value = (data.results[0].zd_gold_licence_options != null) ?  data.results[0].zd_gold_licence_options : [];
     var zd_green_licence_value = (data.results[0].zd_green_licence != null) ?  data.results[0].zd_green_licence : "";
+    var zd_journal_oa_status_value = (data.results[0].zd_journal_oa_status != null) ?  data.results[0].zd_journal_oa_status : "";
     var zd_publisher_value = (data.results[0].zd_publisher != null) ?  data.results[0].zd_publisher : "";
 
     var ticket_fields = {};
@@ -161,6 +163,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
     ticket_fields[zd_green_allowed_version] = zd_green_allowed_version_value;
     ticket_fields[zd_gold_licence_options] = zd_gold_licence_options_value;
     ticket_fields[zd_green_licence] = zd_green_licence_value;
+    ticket_fields[zd_journal_oa_status] = zd_journal_oa_status_value;
     ticket_fields[zd_publisher] = zd_publisher_value;
 
     client.set(ticket_fields).then(
@@ -187,6 +190,7 @@ function showOrpheusInfo(data) {
         'embargo_duration': friendlyEmbargo(data.results[0].zd_embargo_duration),
         'green_allowed_version': friendlyVersion(data.results[0].zd_green_allowed_version),
         'green_licence': friendlyLicence(data.results[0].zd_green_licence),
+        'journal_oa_status': friendlyOaStatus(data.results[0].zd_journal_oa_status),
         'gold_licence_options': data.results[0].zd_gold_licence_options != null ?
             data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x)) : ""
     };
@@ -273,6 +277,16 @@ function friendlyVersion(tag) {
     };
 
     return green_version_dict[tag];
+}
+
+function friendlyOaStatus(tag) {
+    var oa_status_dict = {
+        'journal_oa_status_hybrid': 'Hybrid',
+        'journal_oa_status_open_access': 'Fully Open Access',
+        'journal_oa_status_subscription': 'Subscription'
+    };
+
+    return oa_status_dict[tag];
 }
 
 function formatDate(date) {

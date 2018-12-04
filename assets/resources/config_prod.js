@@ -8,5 +8,6 @@ var gOptions = {
     embargo_duration_field_id: '24072173',
     gold_licence_options_field_id: '360009619733',
     green_allowed_version_field_id: '24072163',
+    journal_oa_status_field_id: '360012205514',
     publisher_name_id: '24069543'
 };

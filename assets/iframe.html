@@ -51,6 +51,12 @@
                 <td>{{green_licence}}</td>
             </tr>
             {{/if}}
+            {{#if journal_oa_status}}
+            <tr>
+                <td><b>Journal OA status</b></td>
+                <td>{{journal_oa_status}}</td>
+            </tr>
+            {{/if}}
         </tbody>
     </table>
     {{#if orpheus_id}}
