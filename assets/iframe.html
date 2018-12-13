@@ -27,6 +27,12 @@
                 <td>{{journal_apc_range}}</td>
             </tr>
             {{/if}}
+            {{#if commitment}}
+            <tr>
+                <td><b>Commitment guidance</b></td>
+                <td>{{commitment}}</td>
+            </tr>
+            {{/if}}
             {{#if embargo_duration}}
             <tr>
                 <td><b>Embargo duration</b></td>
