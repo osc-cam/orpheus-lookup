@@ -193,7 +193,8 @@ function showOrpheusInfo(data) {
         'green_licence': friendlyLicence(data.results[0].zd_green_licence),
         'journal_oa_status': friendlyOaStatus(data.results[0].zd_journal_oa_status),
         'gold_licence_options': data.results[0].zd_gold_licence_options != null ?
-            data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x)) : ""
+            data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x)) : "",
+        'romeo_url': data.results[0].romeo_url,
     };
 
     var source = $("#orpheus-template").html();

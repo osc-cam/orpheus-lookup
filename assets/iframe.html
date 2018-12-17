@@ -66,7 +66,15 @@
         </tbody>
     </table>
     {{#if orpheus_id}}
-        <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank" style="font-size: 14px">Go to Orpheus record</a>
+        {{#if romeo_url}}
+            <p style="font-size: 14px">Go to: <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"
+                                             target="_blank" style="font-size: 14px">Orpheus record</a>;   <a
+                                href={{romeo_url}} target="_blank" style="font-size: 14px">RoMEO record</a></p>
+        {{else}}
+            <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank" style="font-size: 14px">Go to Orpheus record</a>
+        {{/if}}
+    {{else if romeo_url}}
+        <a href={{romeo_url}} target="_blank" style="font-size: 14px">Go to RoMEO record</a>
     {{/if}}
 </script>
 <script id="error-template" type="text/x-handlebars-template">
