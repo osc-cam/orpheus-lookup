@@ -26,57 +26,57 @@ $(function () {
     );
 });
 
-/**
- Retrieve ticket information by ID - not needed for now
- **/
-function requestTicketInfo(client, id) {
-    var settings = {
-        url: '/api/v2/tickets/' + id + '.json',
-        type: 'GET',
-        dataType: 'json',
-    };
-
-    client.request(settings).then(
-        function (data) {
-            /*
-              Journal title field: 38889247
-              ISSN field: 360009657254
-              eISSN field: 360009578193
-          */
-            var issn = "";
-            var eissn = "";
-            var journalName = "";
-
-            requestOrpheusInfo(client, journalName, issn, eissn);
-
-            var issnArray = jQuery.map(data.ticket.fields, function (obj) {
-                if (obj.id === 360009657254)
-                    return obj.value; // or return obj.name, whatever.
-            });
-            var eissnArray = jQuery.map(data.ticket.fields, function (obj) {
-                if (obj.id === 360009578193)
-                    return obj.value; // or return obj.name, whatever.
-            });
-            var journalNameArray = jQuery.map(data.ticket.fields, function (obj) {
-                if (obj.id === 38889247)
-                    return obj.value; // or return obj.name, whatever.
-            });
-
-            journalName = journalNameArray[0];
-            issn = issnArray[0];
-            eISSN = eissnArray[0];
-
-            if (issn == null && eiisn == null && journalName == null) {
-                showOrpheusError("The ticket does not contain any information to query Orpheus. " +
-                    "Please fill in one of the following: issn/eissn or Journal name")
-            } else {
-                requestOrpheusInfo(client, journalName, issn, eissn);
-            }
-        }, function (response) {
-            showError(response);
-        }
-    );
-}
+// /**
+//  Retrieve ticket information by ID - not needed for now
+//  **/
+// function requestTicketInfo(client, id) {
+//     var settings = {
+//         url: '/api/v2/tickets/' + id + '.json',
+//         type: 'GET',
+//         dataType: 'json',
+//     };
+//
+//     client.request(settings).then(
+//         function (data) {
+//             /*
+//               Journal title field: 38889247
+//               ISSN field: 360009657254
+//               eISSN field: 360009578193
+//           */
+//             var issn = "";
+//             var eissn = "";
+//             var journalName = "";
+//
+//             requestOrpheusInfo(client, journalName, issn, eissn);
+//
+//             var issnArray = jQuery.map(data.ticket.fields, function (obj) {
+//                 if (obj.id === 360009657254)
+//                     return obj.value; // or return obj.name, whatever.
+//             });
+//             var eissnArray = jQuery.map(data.ticket.fields, function (obj) {
+//                 if (obj.id === 360009578193)
+//                     return obj.value; // or return obj.name, whatever.
+//             });
+//             var journalNameArray = jQuery.map(data.ticket.fields, function (obj) {
+//                 if (obj.id === 38889247)
+//                     return obj.value; // or return obj.name, whatever.
+//             });
+//
+//             journalName = journalNameArray[0];
+//             issn = issnArray[0];
+//             eISSN = eissnArray[0];
+//
+//             if (issn == null && eiisn == null && journalName == null) {
+//                 showOrpheusError("The ticket does not contain any information to query Orpheus. " +
+//                     "Please fill in one of the following: issn/eissn or Journal name")
+//             } else {
+//                 requestOrpheusInfo(client, journalName, issn, eissn);
+//             }
+//         }, function (response) {
+//             showError(response);
+//         }
+//     );
+// }
 
 /**
  Function to query Orpheus - attempt to query the following fields ordered by precedence:
@@ -180,7 +180,7 @@ function showOrpheusInfo(data) {
     // Are there any results?
     if (data == null || data.count === 0) {
         showOrpheusError("No results from Orpheus for the given search parameters." +
-            "Please review information in Database.");
+            "Please review Zendesk field '#Journal title'.");
     }
     console.log(data)
     var orpheus_data = {
@@ -194,6 +194,7 @@ function showOrpheusInfo(data) {
         'journal_oa_status': friendlyOaStatus(data.results[0].zd_journal_oa_status),
         'gold_licence_options': data.results[0].zd_gold_licence_options != null ?
             data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x)) : "",
+        'deal': data.results[0].zd_deal,
         'romeo_url': data.results[0].romeo_url,
     };
 
