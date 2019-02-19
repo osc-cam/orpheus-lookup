@@ -195,6 +195,10 @@ function showOrpheusInfo(data) {
         'gold_licence_options': data.results[0].zd_gold_licence_options != null ?
             data.results[0].zd_gold_licence_options.map(x => friendlyLicence(x)) : "",
         'deal': data.results[0].zd_deal,
+        'epmc_participation': data.results[0].zd_epmc_participation,
+        'epmc_embargo_months': data.results[0].zd_epmc_embargo_months,
+        'epmc_open_licence': data.results[0].zd_epmc_open_licence,
+        'epmc_deposit_status': data.results[0].zd_epmc_deposit_status,
         'romeo_url': data.results[0].romeo_url,
     };
 
