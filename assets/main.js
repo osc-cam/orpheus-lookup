@@ -1,3 +1,5 @@
+Handlebars.registerPartial("ftLinkPartial", $("#ft-link-partial").html());
+
 $(function () {
     var client = ZAFClient.init();
     resize(client);
@@ -6,17 +8,19 @@ $(function () {
     // Custom fields are not available in the "ticket object", let's retrieve it first
     client.get(['ticket.customField:custom_field_'+ gOptions.issn_field_id,
         'ticket.customField:custom_field_'+ gOptions.eissn_field_id,
-        'ticket.customField:custom_field_'+ gOptions.journal_name_field_id]).then(
+        'ticket.customField:custom_field_'+ gOptions.journal_name_field_id,
+        'ticket.customField:custom_field_'+ gOptions.apollo_id_field_id]).then(
         function (data) {
             var issn = data['ticket.customField:custom_field_'+ gOptions.issn_field_id];
             var eissn = data['ticket.customField:custom_field_'+ gOptions.eissn_field_id];
             var journal_name = data['ticket.customField:custom_field_'+ gOptions.journal_name_field_id];
+            var apollo_id = data['ticket.customField:custom_field_'+ gOptions.apollo_id_field_id];
 
             if (issn != null || eissn != null || journal_name != null) {
-                requestOrpheusInfo(client, journal_name, issn, eissn);
+                requestOrpheusInfo(client, journal_name, issn, eissn, apollo_id);
             } else {
                 showOrpheusError("The ticket does not contain any information to query Orpheus. " +
-                    "Please fill in one of the following: issn/eissn or Journal name");
+                    "Please fill in one of the following: issn/eissn or Journal name", apollo_id);
                 resize(client);
             }
         }, function (response) {
@@ -82,11 +86,13 @@ $(function () {
  Function to query Orpheus - attempt to query the following fields ordered by precedence:
  issn or eissn, journal name
  **/
-function requestOrpheusInfo(client, journalName, issn, eissn) {
+function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
     /*
         Parameter for journal name ?name=
         Parameter for issn/eissn ?issn=
         API endpoint: https://orpheus-[dev|prod].lib.cam.ac.uk/policies/api/cambridge/
+
+        Parameter apollo_id is simply passed to appropriate display function; it is not used in the call to Orpheus
     */
     var orpheusUrl = "";
 
@@ -99,7 +105,7 @@ function requestOrpheusInfo(client, journalName, issn, eissn) {
     } else {
         // No information available to query Orpheus
         showOrpheusError("The ticket does not contain any information to query Orpheus. " +
-            "Please fill in one of the following: issn/eissn or Journal name");
+            "Please fill in one of the following: issn/eissn or Journal name", apollo_id);
     }
 
     // CORS needed for cross-domain issues with redirects
@@ -113,22 +119,22 @@ function requestOrpheusInfo(client, journalName, issn, eissn) {
     client.request(settingsOrpheus).then(
         function (data) {
             if (data != null && data.count > 0) {
-                showOrpheusInfo(data);
+                showOrpheusInfo(data, apollo_id);
                 $('#save_button').show().click(function() {
                     setTicketFieldsFromOrpheusData(client, data);
                 });
             } else {
-                showOrpheusError("No results available in Orpheus.");
+                showOrpheusError("No results available in Orpheus.", apollo_id);
             }
             resize(client);
         },
         function (response) {
             showOrpheusError("Error while querying Orpheus API. Try reloading the app, and if the error persists " +
-                "contact the administrator.");
+                "contact the administrator.", apollo_id);
             resize(client);
         }
     ).catch(function(error) {
-        showOrpheusError(error);
+        showOrpheusError(error, apollo_id);
         resize(client);
     });
 }
@@ -175,7 +181,7 @@ function setTicketFieldsFromOrpheusData(client, data) {
 }
 
 /* Auxiliary, results display functions */
-function showOrpheusInfo(data) {
+function showOrpheusInfo(data, apollo_id) {
 
     // Are there any results?
     if (data == null || data.count === 0) {
@@ -200,6 +206,7 @@ function showOrpheusInfo(data) {
         'epmc_open_licence': data.results[0].zd_epmc_open_licence,
         'epmc_deposit_status': data.results[0].zd_epmc_deposit_status,
         'romeo_url': data.results[0].romeo_url,
+        'apollo_id': apollo_id
     };
 
     var source = $("#orpheus-template").html();
@@ -220,9 +227,10 @@ function showError(response) {
     $("#content").html(html);
 }
 
-function showOrpheusError(sms) {
+function showOrpheusError(sms, apollo_id) {
     var contentObj = {
-        'sms': sms
+        'sms': sms,
+        'apollo_id': apollo_id
     };
 
     var source = $("#orpheus-error-template").html();

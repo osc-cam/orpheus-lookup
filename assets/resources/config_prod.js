@@ -3,6 +3,7 @@ var gOptions = {
     issn_field_id: '360009704474',
     eissn_field_id: '360009704634',
     journal_name_field_id: '24069493',
+    apollo_id_field_id: '39618567',
     apc_range_field_id: '360008258194',
     green_licence_field_id: '24117506',
     embargo_duration_field_id: '24072173',

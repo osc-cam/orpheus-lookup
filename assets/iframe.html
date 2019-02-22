@@ -32,28 +32,28 @@
 
         <tbody>
             {{#if journal_apc_range}}
-            <tr style="background-color: #fff7cc">
+            <tr style="background-color: #FFF6D9">
                 <td><b># APC range</b></td>
                 <td>{{journal_apc_range}}</td>
             </tr>
             {{/if}}
 
             {{#if commitment}}
-            <tr style="background-color: #fff7cc">
+            <tr style="background-color: #FFF6D9">
                 <td><b>Commitment guidance</b></td>
                 <td>{{commitment}}</td>
             </tr>
             {{/if}}
 
             {{#if gold_licence_options}}
-            <tr style="background-color: #fff7cc">
+            <tr style="background-color: #FFF6D9">
                 <td><b># Gold licence options</b></td>
                 <td>{{gold_licence_options}}</td>
             </tr>
             {{/if}}
 
             {{#if deal}}
-            <tr style="background-color: #fff7cc">
+            <tr style="background-color: #FFF6D9">
                 <td><b>Deal</b></td>
                 <td>{{deal}}</td>
             </tr>
@@ -62,21 +62,21 @@
 
         <tbody>
             {{#if green_allowed_version}}
-            <tr style="background-color: #d6f5d6">
+            <tr style="background-color: #D9FFE3">
                 <td><b># Green allowed version</b></td>
                 <td>{{green_allowed_version}}</td>
             </tr>
             {{/if}}
 
             {{#if embargo_duration}}
-            <tr style="background-color: #d6f5d6">
+            <tr style="background-color: #D9FFE3">
                 <td><b># Embargo duration</b></td>
                 <td>{{embargo_duration}}</td>
             </tr>
             {{/if}}
 
             {{#if green_licence}}
-            <tr style="background-color: #d6f5d6">
+            <tr style="background-color: #D9FFE3">
                 <td><b># Green licence</b></td>
                 <td>{{green_licence}}</td>
             </tr>
@@ -85,28 +85,28 @@
 
         <tbody>
             {{#if epmc_participation}}
-            <tr style="background-color: #fde8ec">
+            <tr style="background-color: #FFD9F5">
                 <td><b>EPMC participation</b></td>
                 <td>{{epmc_participation}}</td>
             </tr>
             {{/if}}
 
             {{#if epmc_embargo_months}}
-            <tr style="background-color: #fde8ec">
+            <tr style="background-color: #FFD9F5">
                 <td><b>EPMC embargo</b></td>
                 <td>{{epmc_embargo_months}} months</td>
             </tr>
             {{/if}}
 
             {{#if epmc_open_licence}}
-            <tr style="background-color: #fde8ec">
+            <tr style="background-color: #FFD9F5">
                 <td><b>EPMC OA subset</b></td>
                 <td>{{epmc_open_licence}}</td>
             </tr>
             {{/if}}
 
             {{#if epmc_deposit_status}}
-            <tr style="background-color: #fde8ec">
+            <tr style="background-color: #FFD9F5">
                 <td><b>EPMC deposit status</b></td>
                 <td>{{epmc_deposit_status}}</td>
             </tr>
@@ -114,24 +114,36 @@
         </tbody>
 
     </table>
-    {{#if orpheus_id}}
-        {{#if romeo_url}}
-            <p style="font-size: 14px">Go to: <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"
-                                             target="_blank" style="font-size: 14px">Orpheus record</a>;   <a
-                                href={{romeo_url}} target="_blank" style="font-size: 14px">RoMEO record</a></p>
-        {{else}}
-            <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank" style="font-size: 14px">Go to Orpheus record</a>
-        {{/if}}
-    {{else if romeo_url}}
-        <a href={{romeo_url}} target="_blank" style="font-size: 14px">Go to RoMEO record</a>
-    {{/if}}
+    {{> ftLinkPartial}} {{#if orpheus_id}}<a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"
+        target="_blank" style="font-size: 14px"><img width="24" src="orpheus_icon.ico"></a> {{/if}}{{#if romeo_url}}<a
+        href={{romeo_url}} target="_blank" style="font-size: 14px"><img width="24" src="romeo_favicon.ico"></a> {{/if}}
+    <!--{{#if orpheus_id}}-->
+        <!--{{#if romeo_url}}-->
+            <!--<p style="font-size: 14px">Go to: <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"-->
+                                             <!--target="_blank" style="font-size: 14px">Orpheus record</a>;   <a-->
+                                <!--href={{romeo_url}} target="_blank" style="font-size: 14px">RoMEO record</a></p>-->
+        <!--{{else}}-->
+            <!--<a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank" style="font-size: 14px">Go to Orpheus record</a>-->
+        <!--{{/if}}-->
+    <!--{{else if romeo_url}}-->
+        <!--<a href={{romeo_url}} target="_blank" style="font-size: 14px">Go to RoMEO record</a>-->
+    <!--{{/if}}-->
 </script>
+
 <script id="error-template" type="text/x-handlebars-template">
     <p>{{status}} - {{statusText}} error. Please report a bug at the link below.</p>
 </script>
+
 <script id="orpheus-error-template" type="text/x-handlebars-template">
     <p>{{sms}}</p>
+    {{> ftLinkPartial}}
 </script>
+
+<script id="ft-link-partial" type="text/x-handlebars-template">
+    {{#if apollo_id}}<a href="https://ds-fast-dev.lib.cam.ac.uk/fasttrack/get-item?dspaceId={{apollo_id}}" target="_blank"
+       style="font-size: 14px"><img width="24" src="ft_favicon.ico"></a>{{/if}}
+</script>
+
 <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
 <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
 <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
