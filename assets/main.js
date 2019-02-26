@@ -94,15 +94,22 @@ function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
 
         Parameter apollo_id is simply passed to appropriate display function; it is not used in the call to Orpheus
     */
-    var orpheusUrl = "";
+    var orpheusUrl = gOptions.orpheus_api_url;
+    var operator = "?"
 
     if (issn != null && issn !== "") {
-        orpheusUrl = gOptions.orpheus_api_url + "?issn=" + issn;
-    } else if (eissn != null && eissn !== "") {
-        orpheusUrl = gOptions.orpheus_api_url + "?issn=" + eissn;
-    } else if (journalName != null && journalName !== "") {
-        orpheusUrl = gOptions.orpheus_api_url + "?name=" + encodeURIComponent(journalName);
-    } else {
+        orpheusUrl = orpheusUrl + operator + "issn=" + issn;
+        operator = "&"
+    }
+    if (eissn != null && eissn !== "") {
+        orpheusUrl = orpheusUrl + operator + "issn=" + eissn;
+        operator = "&"
+    }
+    if (journalName != null && journalName !== "") {
+        orpheusUrl = orpheusUrl + operator + "name=" + encodeURIComponent(journalName);
+        operator = "&"
+    }
+    if (operator == "?") {
         // No information available to query Orpheus
         showOrpheusError("The ticket does not contain any information to query Orpheus. " +
             "Please fill in one of the following: issn/eissn or Journal name", apollo_id);
