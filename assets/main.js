@@ -19,8 +19,9 @@ $(function () {
             if (issn != null || eissn != null || journal_name != null) {
                 requestOrpheusInfo(client, journal_name, issn, eissn, apollo_id);
             } else {
-                showOrpheusError("The ticket does not contain any information to query Orpheus. " +
-                    "Please fill in one of the following: issn/eissn or Journal name", apollo_id);
+                showOrpheusError("This ticket does not contain any journal information to query Orpheus. Please " +
+                      "fill in at least one of the following fields: #Apollo ISSN, #Apollo eISSN, #Journal " +
+                      " title", apollo_id);
                 resize(client);
             }
         }, function (response) {
@@ -95,24 +96,29 @@ function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
         Parameter apollo_id is simply passed to appropriate display function; it is not used in the call to Orpheus
     */
     var orpheusUrl = gOptions.orpheus_api_url;
-    var operator = "?"
+    var operator = "?";
 
     if (issn != null && issn !== "") {
         orpheusUrl = orpheusUrl + operator + "issn=" + issn;
-        operator = "&"
+        operator = "&";
     }
     if (eissn != null && eissn !== "") {
-        orpheusUrl = orpheusUrl + operator + "issn=" + eissn;
-        operator = "&"
+        if (operator == "?") {
+            orpheusUrl = orpheusUrl + operator + "issn=" + eissn;
+            operator = "&";
+        } else {
+            orpheusUrl = orpheusUrl + "," + eissn;
+            operator = "&";
+        }
     }
     if (journalName != null && journalName !== "") {
         orpheusUrl = orpheusUrl + operator + "name=" + encodeURIComponent(journalName);
-        operator = "&"
+        operator = "&";
     }
     if (operator == "?") {
         // No information available to query Orpheus
-        showOrpheusError("The ticket does not contain any information to query Orpheus. " +
-            "Please fill in one of the following: issn/eissn or Journal name", apollo_id);
+        showOrpheusError("Well done! You win a coconut. This error should be impossible to hit, so please " +
+            "send the link to this ticket to Andre and/or Agustina", apollo_id);
     }
 
     // CORS needed for cross-domain issues with redirects
@@ -131,13 +137,15 @@ function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
                     setTicketFieldsFromOrpheusData(client, data);
                 });
             } else {
-                showOrpheusError("No results available in Orpheus.", apollo_id);
+                showOrpheusError("No results available in Orpheus. Why not add this journal and make your work " +
+                "easier tomorrow?", apollo_id);
             }
             resize(client);
         },
         function (response) {
-            showOrpheusError("Error while querying Orpheus API. Try reloading the app, and if the error persists " +
-                "contact the administrator.", apollo_id);
+            showOrpheusError("Error while querying Orpheus API. This usually means you are away from the UL and not " +
+            "connected to the library's VPN. If you are connected, try reloading the app and, if the error persists, " +
+            "contact Andre and/or Agustina.", apollo_id);
             resize(client);
         }
     ).catch(function(error) {
