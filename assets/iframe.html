@@ -15,6 +15,12 @@
 <script id="orpheus-template" type="text/x-handlebars-template">
     <table class="table table-sm">
         <tbody>
+            {{#if preferred_name}}
+            <tr>
+                <td><b>Preferred name</b></td>
+                <td>{{preferred_name}}</td>
+            </tr>
+            {{/if}}
             {{#if publisher_name}}
             <tr>
                 <td><b># Publisher</b></td>
@@ -114,20 +120,8 @@
         </tbody>
 
     </table>
-    {{> ftLinkPartial}} {{#if orpheus_id}}<a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"
-        target="_blank" style="font-size: 14px"><img width="24" src="orpheus_icon.ico"></a> {{/if}}{{#if romeo_url}}<a
+    {{> ftLinkPartial}} {{> orpheusLinkPartial}} {{#if romeo_url}}<a
         href={{romeo_url}} target="_blank" style="font-size: 14px"><img width="24" src="romeo_favicon.ico"></a> {{/if}}
-    <!--{{#if orpheus_id}}-->
-        <!--{{#if romeo_url}}-->
-            <!--<p style="font-size: 14px">Go to: <a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}"-->
-                                             <!--target="_blank" style="font-size: 14px">Orpheus record</a>;   <a-->
-                                <!--href={{romeo_url}} target="_blank" style="font-size: 14px">RoMEO record</a></p>-->
-        <!--{{else}}-->
-            <!--<a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank" style="font-size: 14px">Go to Orpheus record</a>-->
-        <!--{{/if}}-->
-    <!--{{else if romeo_url}}-->
-        <!--<a href={{romeo_url}} target="_blank" style="font-size: 14px">Go to RoMEO record</a>-->
-    <!--{{/if}}-->
 </script>
 
 <script id="error-template" type="text/x-handlebars-template">
@@ -142,6 +136,13 @@
 <script id="ft-link-partial" type="text/x-handlebars-template">
     {{#if apollo_id}}<a href="https://fasttrack.lib.cam.ac.uk/fasttrack/get-item?dspaceId={{apollo_id}}" target="_blank"
        style="font-size: 14px"><img width="24" src="ft_favicon.ico"></a>{{/if}}
+</script>
+
+<script id="orpheus-link-partial" type="text/x-handlebars-template">
+    {{#if preferred_name_id}}<a href="https://orpheus-prod.lib.cam.ac.uk/policies/{{preferred_name_id}}" target="_blank"
+        style="font-size: 14px"><img width="24" src="orpheus_icon.ico"></a>{{else if orpheus_id}}<a
+        href="https://orpheus-prod.lib.cam.ac.uk/policies/{{orpheus_id}}" target="_blank"
+        style="font-size: 14px"><img width="24" src="orpheus_icon.ico"></a>{{/if}}
 </script>
 
 <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>

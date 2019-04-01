@@ -1,4 +1,5 @@
 Handlebars.registerPartial("ftLinkPartial", $("#ft-link-partial").html());
+Handlebars.registerPartial("orpheusLinkPartial", $("#orpheus-link-partial").html());
 
 $(function () {
     var client = ZAFClient.init();
@@ -206,6 +207,8 @@ function showOrpheusInfo(data, apollo_id) {
     console.log(data)
     var orpheus_data = {
         'orpheus_id': data.results[0].id,
+        'preferred_name_id': data.results[0].preferred_name_id,
+        'preferred_name': data.results[0].preferred_name,
         'publisher_name': data.results[0].zd_publisher,
         'journal_apc_range': data.results[0].zd_apc_range,
         'commitment': data.results[0].zd_commitment_guidance,
