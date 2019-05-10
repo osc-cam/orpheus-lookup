@@ -17,8 +17,9 @@ $(function () {
             var journal_name = data['ticket.customField:custom_field_'+ gOptions.journal_name_field_id];
             var apollo_id = data['ticket.customField:custom_field_'+ gOptions.apollo_id_field_id];
 
-            if (issn != null || eissn != null || journal_name != null) {
+            if ((issn != null || eissn != null || journal_name != null) && (issn != "" || eissn != "" || journal_name != "")) {
                 requestOrpheusInfo(client, journal_name, issn, eissn, apollo_id);
+                console.log(`issn=${issn}; eissn=${eissn}; journal_name=${journal_name}.`);
             } else {
                 showOrpheusError("This ticket does not contain any journal information to query Orpheus. Please " +
                       "fill in at least one of the following fields: #Apollo ISSN, #Apollo eISSN, #Journal " +
@@ -99,11 +100,11 @@ function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
     var orpheusUrl = gOptions.orpheus_api_url;
     var operator = "?";
 
-    if (issn != null && issn !== "") {
+    if (issn != null && issn != "") {
         orpheusUrl = orpheusUrl + operator + "issn=" + issn;
         operator = "&";
     }
-    if (eissn != null && eissn !== "") {
+    if (eissn != null && eissn != "") {
         if (operator == "?") {
             orpheusUrl = orpheusUrl + operator + "issn=" + eissn;
             operator = "&";
@@ -112,7 +113,7 @@ function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
             operator = "&";
         }
     }
-    if (journalName != null && journalName !== "") {
+    if (journalName != null && journalName != "") {
         orpheusUrl = orpheusUrl + operator + "name=" + encodeURIComponent(journalName);
         operator = "&";
     }
@@ -129,6 +130,8 @@ function requestOrpheusInfo(client, journalName, issn, eissn, apollo_id) {
         type: 'GET',
         dataType: 'json'
     };
+
+    console.log(orpheusUrl);
 
     client.request(settingsOrpheus).then(
         function (data) {
